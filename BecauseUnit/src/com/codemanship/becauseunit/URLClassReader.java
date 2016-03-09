@@ -12,7 +12,10 @@ public class URLClassReader implements ClassReader {
 			throws MalformedURLException, ClassNotFoundException, IOException {
 				URLClassLoader urlLoader = new URLClassLoader(new URL[]{testFile.toURI().toURL()});
 				String packageName = getPackageName(classPath, testFile);
-				Class<?> testClass = urlLoader.loadClass(packageName + "." + testFile.getName().substring(0, testFile.getName().length() - 6));
+				if(packageName != ""){
+					packageName += ".";
+				}
+				Class<?> testClass = urlLoader.loadClass(packageName + testFile.getName().substring(0, testFile.getName().length() - 6));
 				urlLoader.close();
 				return testClass;
 			}
@@ -30,7 +33,7 @@ public class URLClassReader implements ClassReader {
 
 	private boolean hasNoPackageName(String classPath, File testFile,
 			String packageName) {
-		return packageName.contains("\\" + classPath + "\\" + testFile.getName());
+		return packageName.contains(classPath + "\\" + testFile.getName());
 	}
 
 }
