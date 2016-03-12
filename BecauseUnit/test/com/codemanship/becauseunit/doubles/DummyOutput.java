@@ -3,6 +3,7 @@ package com.codemanship.becauseunit.doubles;
 import java.util.List;
 
 import com.codemanship.becauseunit.Output;
+import com.codemanship.becauseunit.SimpleTest;
 import com.codemanship.becauseunit.Test;
 
 public class DummyOutput implements Output {

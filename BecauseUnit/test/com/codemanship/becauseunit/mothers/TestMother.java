@@ -2,14 +2,14 @@ package com.codemanship.becauseunit.mothers;
 
 import java.lang.reflect.Method;
 
-import com.codemanship.becauseunit.Test;
+import com.codemanship.becauseunit.SimpleTest;
 
 public class TestMother {
 
-	public Test createTest(String testMethodName, Class<?> testClass, Object fixture)
+	public SimpleTest createTest(String testMethodName, Class<?> testClass, Object fixture)
 			throws NoSuchMethodException {
 				Method testMethod = testClass.getMethod(testMethodName);
-				return new Test(fixture, testMethod);
+				return new SimpleTest(fixture, testMethod);
 	}
 
 }

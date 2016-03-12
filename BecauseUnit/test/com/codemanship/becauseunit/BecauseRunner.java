@@ -3,9 +3,11 @@ package com.codemanship.becauseunit;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.codemanship.becauseunit.console.ConsoleOutput;
 import com.codemanship.becauseunit.doubles.SpyWriter;
 import com.codemanship.becauseunit.doubles.TestLoaderStub;
 import com.codemanship.becauseunit.mothers.TestMother;
+
 import static com.codemanship.becauseunit.Checker.*;
 
 public class BecauseRunner {

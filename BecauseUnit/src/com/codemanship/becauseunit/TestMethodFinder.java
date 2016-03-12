@@ -1,6 +1,5 @@
 package com.codemanship.becauseunit;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +9,9 @@ public class TestMethodFinder {
 	private ArrayList<Test> tests = new ArrayList<Test>();
 	private Class<?> testClass;
 	private Object testFixture;
+	private TestMethodValidator validator;
 
-	public TestMethodFinder(Class<?> testClass) {
+	public TestMethodFinder(Class<?> testClass, TestMethodValidator validator) {
 		this.testClass = testClass;
 		try {
 			testFixture = testClass.newInstance();
@@ -20,6 +20,7 @@ public class TestMethodFinder {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
+		this.validator = validator;
 	}
 
 	public List<Test> findAll() {
@@ -31,23 +32,17 @@ public class TestMethodFinder {
 
 	private void add(Method method) {
 		if(method.getName().startsWith("because")){
-			if(hasParameters(method) || !isVoid(method) || !isPublic(method)) {
-				throw new InvalidTestMethodException(method);
-			}
-			tests.add(new Test(testFixture, method));
+			validator.validate(method);						
+			tests.add(createTest(method));
 		}
 	}
 
-	private boolean isPublic(Method method) {
-		return Modifier.isPublic(method.getModifiers());
-	}
-
-	private boolean isVoid(Method method) {
-		return method.getReturnType() == void.class;
-	}
-
-	private boolean hasParameters(Method method) {
-		return method.getParameterTypes().length > 0;
+	private Test createTest(Method method) {
+		if(validator.isParameterised(method)){
+			return new ParameterisedTest(testFixture, method);
+		} else {
+			return new SimpleTest(testFixture, method);
+		}
 	}
 
 }

@@ -1,50 +1,15 @@
 package com.codemanship.becauseunit;
 
-import java.lang.reflect.Method;
+public interface Test {
 
-public class Test {
+	public abstract String getName();
 
-	private Method testMethod;
-	private Object testFixture;
-	private boolean failed = false;
-	private Exception exception;
+	public abstract void run(Output output);
 
-	public Test(Object testFixture, Method testMethod) {
-		this.testFixture = testFixture;
-		this.testMethod = testMethod;
-	}
+	public abstract boolean hasFailed();
 
-	public String getName() {
-		return testFixture.getClass().getName() + "::" + testMethod.getName();
-	}
-
-	public void run(Output output) {
-
-			try {
-				testMethod.invoke(testFixture);
-			} catch (Exception e) {
-				failed = true;
-				exception = e;
-			} finally {
-				writeResult(output);
-			}
-	}
-
-	private void writeResult(Output output) {
-		output.writeTestResult(this);
-	}
-
-
-	public boolean hasFailed() {
-		return failed;
-	}
-
-	public Exception getException() {
-		return exception;
-	}
-
-	public void setException(Exception exception) {
-		this.exception = exception;
-	}
+	public abstract Exception getException();
+	
+	public abstract Object[] getTestCaseData();
 
 }

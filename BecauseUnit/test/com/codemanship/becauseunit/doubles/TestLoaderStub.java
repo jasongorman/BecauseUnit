@@ -2,6 +2,7 @@ package com.codemanship.becauseunit.doubles;
 
 import java.util.List;
 
+import com.codemanship.becauseunit.SimpleTest;
 import com.codemanship.becauseunit.Test;
 import com.codemanship.becauseunit.TestLoader;
 
