@@ -62,7 +62,7 @@ public class ConsoleOutput implements Output {
 	private String printStackTrace(Test test) {
 		String stackTrace = "";	
 		
-		Throwable cause = test.getException().getCause();
+		Throwable cause = getTestFailureCause(test);
 		
 		if(cause.getMessage() != null)
 			stackTrace = "----\t" + cause.getMessage();
@@ -76,6 +76,13 @@ public class ConsoleOutput implements Output {
 			}
 		}
 		return stackTrace;
+	}
+
+	private Throwable getTestFailureCause(Test test) {
+		Throwable cause = test.getException();
+		
+		if(cause.getCause() != null) cause = cause.getCause();
+		return cause;
 	}
 
 }

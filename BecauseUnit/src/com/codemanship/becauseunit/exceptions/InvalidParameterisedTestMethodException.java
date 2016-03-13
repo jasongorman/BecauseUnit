@@ -9,8 +9,9 @@ public class InvalidParameterisedTestMethodException extends RuntimeException {
 	public InvalidParameterisedTestMethodException(Method invalidMethod) {
 		super("\n" + invalidMethod.getDeclaringClass().getName() + "::" + invalidMethod.getName() + " is not a valid BecauseUnit test" +
 				"\nIt must be public void, have at least one parameter" +
-				" and be in a class that contains a method called 'datafor_' " + ""
-						+ "followed by the test method name");
+				" and be in a class that contains a method called 'datafor_' "
+						+ "followed by the test method name, that returns an Object[][] array "
+						+ "where every row has matching elements to the test's parameters");
 	}
 
 }
